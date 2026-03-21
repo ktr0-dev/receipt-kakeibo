@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>レシート読み取り家計簿</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; text-align: center; }
+        .upload-box { border: 2px dashed #ccc; padding: 20px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+<h1>家計簿アプリへようこそ</h1>
+<div class="upload-box">
+    <h3>レシート画像をアップロードしてください</h3>
+    <p th:text="${messaage}"><</p>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*">
+        <br><br>
+        <button type="submit">送信して読み取る</button>
+    </form>
+</div>
+</body>
+</html>
