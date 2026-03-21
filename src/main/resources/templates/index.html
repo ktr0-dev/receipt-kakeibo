@@ -12,7 +12,7 @@
 <h1>家計簿アプリへようこそ</h1>
 <div class="upload-box">
     <h3>レシート画像をアップロードしてください</h3>
-    <p th:text="${messaage}"><</p>
+    <p th:text="${message}"><</p>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" name="file" accept="image/*">
         <br><br>

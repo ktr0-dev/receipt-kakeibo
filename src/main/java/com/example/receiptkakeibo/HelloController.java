@@ -7,8 +7,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 @Controller
 public class HelloController {
+
+    // 保存先のフォルダパスを指定
+    private static final String UPLOAD_DIR = "uploads/";
 
     // 最初にページを開いた時の処理
     @GetMapping("/")
@@ -24,9 +33,18 @@ public class HelloController {
             return "index";
         }
 
-        // ここでファイルを受け取ったことを確認
-        String fileName = file.getOriginalFilename();
-        model.addAttribute("message", "アップロード成功！ファイル名: " + fileName);
+        try {
+            // 1. 保存先のパスを作成（例：uploads/receipt.jpg）
+            Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
+
+            // 2. ファイルを保存（同じ名前があれば上書きする設定）
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+            model.addAttribute("message", "保存成功！ファイル名: " + file.getOriginalFilename());
+
+        } catch (IOException e) {
+            model.addAttribute("message", "保存中にエラーが発生しました");
+        }
 
         return "index"; // とりあえず同じ画面に戻る
     }
